@@ -1,0 +1,67 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="MainForm.master.cs" Inherits="WebApp.MainForm" %>
+
+<!DOCTYPE html>
+
+<html>
+<head runat="server">
+    <title></title>
+    <link href="Content/Site.css" rel="stylesheet" />
+    <link href="Content/bootstrap.css" rel="stylesheet" />
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+    <form id="form1" runat="server" class="container">
+        <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="Home/Index">Aplikacija</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarCollapse">
+                    <ul class="navbar-nav me-auto mb-2 mb-md-0">
+                        <li class="nav-item">
+                            <a class="nav-link" href="MainForm.aspx">Kupac</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="Proizvod">Proizvod</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="Kategorija">Kategorija</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="Potkategorija">Potkategorija</a>
+                        </li>
+                    </ul>
+                    <div class="d-flex">
+                        <asp:LoginView runat="server" ViewStateMode="Disabled">
+                            <AnonymousTemplate>
+                                <ul class="navbar-nav">
+                                    <li class="nav-item"><a class="nav-link" runat="server" href="~/Account/Register">Register</a></li>
+                                    <li class="nav-item"><a class="nav-link" runat="server" href="~/Account/Login">Log in</a></li>
+                                </ul>
+                            </AnonymousTemplate>
+                            <LoggedInTemplate>
+                                <ul class="navbar-nav">
+                                    <li class="nav-item"><a class="nav-link" runat="server" href="~/Account/Manage" title="Manage your account">Hello, <%: Context.User.Identity.Name  %> !</a></li>
+                                    <li class="nav-item">
+                                        <asp:LoginStatus CssClass="nav-link" runat="server" LogoutText="Log off" OnLoggingOut="Unnamed_LoggingOut" />
+                                    </li>
+                                </ul>
+                            </LoggedInTemplate>
+                        </asp:LoginView>
+                    </div>
+                </div>
+            </div>
+        </nav>
+        <main class="container body-content mt-3">
+            <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+            </asp:ContentPlaceHolder>
+            <hr />
+            <footer>
+                <p>&copy; <%= DateTime.Now.Year %> - Customer WebForms</p>
+            </footer>
+        </main>
+    </form>
+</body>
+</html>

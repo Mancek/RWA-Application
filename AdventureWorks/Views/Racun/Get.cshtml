@@ -1,0 +1,112 @@
+﻿@model IEnumerable<AdventureWorks.Models.Racun>
+
+@{
+    ViewBag.Title = "Get";
+}
+<div class="container bg-light rounded-3 mt-5">
+    <table class="table table-racun mb-5">
+        <tr>
+            <th>
+                @Html.Name("ID Racuna")
+            </th>
+            <th>
+                @Html.Name("Ime kupca")
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.KreditnaKartica.Tip)
+            </th>
+            <th>
+                @Html.Name("Ime komercijalista")
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DatumIzdavanja)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BrojRacuna)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Komentar)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IDRacun)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Kupac.Ime)
+                    @Html.DisplayFor(modelItem => item.Kupac.Prezime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.KreditnaKartica.Tip)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Komercijalist.Ime)
+                    @Html.DisplayFor(modelItem => item.Komercijalist.Prezime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DatumIzdavanja)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BrojRacuna)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Komentar)
+                </td>
+                <td>
+                    <button id="selectRacun" class="btn btn-sm btn-primary">Select</button>
+                </td>
+            </tr>
+        }
+
+    </table>
+    </div>
+    <hr />
+
+    <div class="container bg-light rounded-3 mt-5">
+        <table class="table table-stavka">
+            <thead>
+                <tr>
+                    <th>Stavka</th>
+                    <th>Proizvod</th>
+                    <th>Potkategorija</th>
+                    <th>Kategorija</th>
+                    <th>Kreditna kartica</th>
+                    <th>Komercijalist</th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+
+    @section Scripts {
+        <script>
+            $(() => {
+                $('.table-stavka').hide();
+                $('.table-racun').on('click', '#selectRacun', function () {
+                    let id = $(this).closest('tr').find('td:eq(0)').text().trim();
+                    let urlText = "/api/Stavka/" + id;
+                    let dataTableConfig = {
+                        ajax: {
+                            url: urlText,
+                            dataSrc: ''
+                        },
+                        columns: [
+                            { data: 'Stavka' },
+                            { data: 'Proizvod' },
+                            { data: 'Potkategorija' },
+                            { data: 'Kategorija' },
+                            { data: 'KreditnaKartica' },
+                            { data: 'Komercijalist' }
+                        ],
+                        searching: false
+                    }
+                    $('.table-stavka').DataTable().destroy();
+                    $('.table-stavka').DataTable(dataTableConfig);
+                    $('.table-stavka').show();
+                });
+            });
+        </script>
+    }

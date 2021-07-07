@@ -1,0 +1,36 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<div style="height:100vh">
+    <div class="d-flex flex-column min-vh-100 justify-content-center align-items-center">
+        <div class="h-100 p-5 bg-light border rounded-3">
+            <div class="text-center mb-3">
+                <img src="~/Content/cat.jpg" alt="I can fix it" />
+            </div>
+            <div>
+                <label class="display-1 mb-5">Sorry, something went wrong</label>
+                <hr />
+            </div>
+            <div class="mt-5 text-center">
+                <button id="btnHome" class="display-5 btn btn-primary me-5">Home Page</button>
+                <button id="btnBack" class="display-5 btn btn-secondary">Go back</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(() => {
+            $("#btnHome").click(() => {
+                window.location.replace("/Home");
+            });
+            $("#btnBack").click(() => {
+                var urlParams = new URLSearchParams(window.location.search);
+                window.location.replace(urlParams.get('aspxerrorpath'));
+            });
+        });
+    </script>
+}

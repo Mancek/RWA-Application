@@ -1,0 +1,69 @@
+﻿@model IEnumerable<AdventureWorks.Models.Kategorija>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Kategorije</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-primary" })
+</p>
+<div class="container bg-light rounded-3">
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Naziv)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Naziv)
+                </td>
+                <td class="text-end">
+                    @Html.ActionLink("Edit", "Edit",
+                        new { id = item.IDKategorija },
+                        new { @class = "btn btn-sm btn-primary" })
+                    @Html.ActionLink("Delete", "Delete",
+                        new { id = item.IDKategorija },
+                        new
+                             {
+                                 @class = "btn btn-sm btn-danger",
+                            data_id = item.IDKategorija,
+                            data_naziv = item.Naziv
+                        })
+                </td>
+            </tr>
+        }
+
+    </table>
+</div>
+@section scripts {
+    <script>
+        $('.btn-danger').on('click', function (e) {
+            e.preventDefault();
+            const { id, naziv } = this.dataset;
+
+            if (confirm(`Obrisati ${naziv}?`)) {
+                $.ajax({
+                    url: '@Url.Action(controllerName:"Kategorija", actionName:"Delete")',
+                    data: { id },
+                    statusCode: {
+                        200: function () {
+                            $('.table').find(`[data-id=${id}]`)
+                                .parents('tr')
+                                .hide(500);
+                        },
+                        400: function () {
+                            alert('Neuspjesno brisanje');
+                        }
+                    }
+                });
+            }
+        })
+    </script>
+}
